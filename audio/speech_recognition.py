@@ -44,7 +44,7 @@ class SpeechRecognition:
                     r_dict = json.loads(r_json)
                     if "text" in r_dict:
                         r_text = r_dict["text"].strip()
-                        # Vosk often misinterprets silence as the word "the"
+                        # Vosk often misinterprets silence and minor sounds as the word "the"
                         if r_text and r_text != "the":
                             return r_text
                         else:

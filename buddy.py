@@ -8,6 +8,7 @@ class Buddy:
         config = load_config()
         self.config = {
             "SPEAKER_NAME": config.get("SPEAKER_NAME"),
+            "SPEAKER_INDEX": config.get("SPEAKER_INDEX"),
             "MICROPHONE_NAME": config.get("MICROPHONE_NAME")
         }
 
@@ -32,7 +33,7 @@ class Buddy:
     def run(self):
         while True:
             if self.standby == False:
-                self.tts.play_ready_tone()
+                self.tts.play_tone()
 
             text = self.sr.record_input()
             print(f"Interpreted text: {text}")
@@ -41,7 +42,7 @@ class Buddy:
             # i feel like that should be most optimal even though i'm doing separate functions for now
             if self.msg_utils.check_end_of_line(text):
                 if self.standby == False:
-                    self.tts.play_ready_tone(frequency=440)
+                    self.tts.play_tone(frequency=440)
                     print("Entering standby mode.")
                     self.tts.speak("Okay. Entering standby mode.")
                 self.standby = True
@@ -64,7 +65,7 @@ class Buddy:
                 continue
 
             self.standby = False
-            self.tts.play_ready_tone(frequency=440)
+            self.tts.play_tone(frequency=440)
             response_stream = self.model.send_message(text)
             full_response = self.tts.process_streamed_response(response_stream)
 
