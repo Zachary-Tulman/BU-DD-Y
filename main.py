@@ -1,6 +1,26 @@
 from buddy import Buddy
+import argparse
 
-# TODO: modify build to be OS-agnostic for dev/prod release split (testing on unix platforms)
+parser = argparse.ArgumentParser(description="Voice Assistant")
+parser.add_argument("--devices", action="store_true",
+                    help="List available audio devices and exit")
+parser.add_argument("--voices", action="store_true",
+                    help="List available TTS voices and exit")
+
+args = parser.parse_args()
+
+if args.devices:
+    from audio import text_to_speech as tts
+    # empty object is passed because we aren't initializing
+    text_to_speech = tts.TextToSpeech({})
+    # TODO: if we are sticking with pyaudio, write a loop to list all device info
+    #       if we are moving to sounddevice, it's a little easier
+    print(text_to_speech.p.get_device_info_by_index(0))
+
+# TODO: Decide if we are sticking with pyaudio or switching to sounddevice.
+#       It all hinges on if we can still do the audio stream onto the jabra with sounddevice
+
+# TODO: modify build to be OS-agnostic for dev/prod release split (testing on linux platforms)
 #       SUB-TODO: create config-dev.py and add it to .gitignore.
 #                 config.py will be on the main repo for OS-agnosticism, config-dev.py lives in dev for windows only
 

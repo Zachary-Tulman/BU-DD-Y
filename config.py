@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 def load_config():
     load_dotenv()
 
+    ### Peripheral names are string-matched. You can find a full list of your
+    #       device's peripheral names by running "py main.py --devices"
     return {
         "DEEPSEEK_API_KEY": os.getenv("DEEPSEEK_API_KEY"),
         "BUDDY_PROMPT": os.getenv("BUDDY_PROMPT"),
