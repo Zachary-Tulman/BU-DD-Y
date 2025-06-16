@@ -18,7 +18,7 @@ class TextToSpeech:
         voices = self.engine.getProperty("voices")
         #for voice in voices:
         #    print(voice.name)
-        self.engine.setProperty("voice", voices[self.config.get("SPEAKER_INDEX")].id)
+        self.engine.setProperty("voice", voices[self.config.get("VOICE_INDEX")].id)
         self.engine.setProperty("rate", 140)
 
         self.speaker_index = self._get_speaker_index()

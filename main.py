@@ -20,9 +20,10 @@ if args.devices:
 # TODO: Decide if we are sticking with pyaudio or switching to sounddevice.
 #       It all hinges on if we can still do the audio stream onto the jabra with sounddevice
 
+
+
+
 # TODO: modify build to be OS-agnostic for dev/prod release split (testing on linux platforms)
-#       SUB-TODO: create config-dev.py and add it to .gitignore.
-#                 config.py will be on the main repo for OS-agnosticism, config-dev.py lives in dev for windows only
 
 # TODO: add "transcription" mode where buddy just takes all the text it recognizes until it hears a key word then spits out the end result
 
