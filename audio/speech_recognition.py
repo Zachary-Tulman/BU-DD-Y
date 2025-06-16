@@ -17,6 +17,18 @@ class SpeechRecognition:
 
         self.calibrate_audio()
 
+    def _get_mic_index(self):
+        mic_names = sr.Microphone.list_microphone_names()
+        for i, s in enumerate(mic_names):
+            if os.getenv("MICROPHONE_NAME") in s:
+                return i
+        
+        import pyaudio
+        p = pyaudio.PyAudio()
+        default_index = p.get_default_input_device_info()
+        p.terminate()
+        return default_index
+
     def calibrate_audio(self):
         with sr.Microphone(device_index=self._get_mic_index()) as mic_source:
             self.r.adjust_for_ambient_noise(mic_source)
@@ -26,10 +38,6 @@ class SpeechRecognition:
                 self.r.recognize_vosk(dummy_audio)
             except sr.UnknownValueError:
                 pass
-
-    def _get_mic_index(self):
-        mic_names = sr.Microphone.list_microphone_names()
-        return next((i for i, s in enumerate(mic_names) if os.getenv("MICROPHONE_NAME") in s))
     
     def record_input(self) -> str:
         while True:

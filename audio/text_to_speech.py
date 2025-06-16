@@ -6,6 +6,7 @@ import os
 import time
 import numpy as np
 import re
+import sys
 
 class TextToSpeech:
     def __init__(self, config):
@@ -16,8 +17,6 @@ class TextToSpeech:
     
     def initialize(self):
         voices = self.engine.getProperty("voices")
-        #for voice in voices:
-        #    print(voice.name)
         self.engine.setProperty("voice", voices[self.config.get("VOICE_INDEX")].id)
         self.engine.setProperty("rate", 140)
 
@@ -27,7 +26,7 @@ class TextToSpeech:
         for i in range(self.p.get_device_count()):
             if self.config.get("SPEAKER_NAME") in self.p.get_device_info_by_index(i)['name']:
                 return i
-        return None
+        return self.p.get_default_output_device_info()['index']
 
     def speak(self, text):
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmpfile:

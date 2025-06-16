@@ -10,20 +10,24 @@ parser.add_argument("--voices", action="store_true",
 args = parser.parse_args()
 
 if args.devices:
-    from audio import text_to_speech as tts
-    # empty object is passed because we aren't initializing
-    text_to_speech = tts.TextToSpeech({})
-    # TODO: if we are sticking with pyaudio, write a loop to list all device info
-    #       if we are moving to sounddevice, it's a little easier
-    print(text_to_speech.p.get_device_info_by_index(0))
+    import sounddevice as sd
+    print(sd.query_devices())
 
-# TODO: Decide if we are sticking with pyaudio or switching to sounddevice.
-#       It all hinges on if we can still do the audio stream onto the jabra with sounddevice
-
-
+if args.voices:
+    import pyttsx3
+    engine = pyttsx3.init()
+    voices = engine.getProperty("voices")
+    for voice in voices:
+        print(voice.name)
 
 
 # TODO: modify build to be OS-agnostic for dev/prod release split (testing on linux platforms)
+#   - create "requirements.txt"
+#   - upload to a private github repo
+#   - clone to linux, install requirements.txt idk how to do that
+#   - run in linux (should need to install espeak and something else that i forgot)
+#   - once you know what to install, find out how to check for its absence and put a message saying how to download it
+
 
 # TODO: add "transcription" mode where buddy just takes all the text it recognizes until it hears a key word then spits out the end result
 
