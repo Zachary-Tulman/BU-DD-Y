@@ -1,0 +1,7 @@
+Markdown==3.8
+numpy==2.3.0
+openai==1.88.0
+PyAudio==0.2.14
+python-dotenv==1.1.0
+pyttsx3==2.98
+sounddevice==0.5.1
